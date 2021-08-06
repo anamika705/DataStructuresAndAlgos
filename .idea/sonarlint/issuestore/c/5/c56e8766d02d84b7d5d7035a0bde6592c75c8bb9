@@ -1,0 +1,27 @@
+
+U	java:S106	"9Replace this use of System.out or System.err by a logger.(Ÿ“®Ð8Ç¯ò¢±/
+{
+java:S2293/"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ô¡Ûöýÿÿÿÿ8î¯ò¢±/
+@
+java:S16597"#Declare "index" on a separate line.(Ú¾¶Ö8ö¯ò¢±/
+<
+java:S16597"Declare "i" on a separate line.(Ú¾¶Ö8ö¯ò¢±/
+B
+java:S2116J"%Use "Arrays.toString(array)" instead.(ÈÚ˜ñ8ý¯ò¢±/
+j
+java:S5361P"HReplace this call to "replaceAll()" by a call to the "replace()" method.(þ·¼Ãþÿÿÿÿ8«°ò¢±/
+^
+java:S1126\"AReplace this if-then-else statement by a single return statement.(íúÂ8±°ò¢±/
+o
+java:S3776b"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(‡Ý¢‹8´°ò¢±/
+u
+java:S3776Ê"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(¡ûïêÿÿÿÿÿ8Ú°ò¢±/
+d
+java:S1126ë"AReplace this if-then-else statement by a single return statement.(¾Û¡êþÿÿÿÿ8é°ò¢±/
+D
+java:S1481"(Remove this unused "arr" local variable.(°¥b8í°ò¢±/
+t	java:S127"XRefactor the code in order to not assign to this loop counter from within the loop body.(Ÿ£ÌÖ8ñ°ò¢±/
+L
+java:S1066W"/Merge this if statement with the enclosing one.(µ¸–¶8ò°ò¢±/
+[
+java:S4973"9Use the "equals" method if value comparison was intended.(Ûåº†ûÿÿÿÿ8ú°ò¢±/

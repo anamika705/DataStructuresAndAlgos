@@ -22,6 +22,8 @@ public class SortingAlgos {
         return arr;
     }
 
+
+
     /** Comparision happens between a[i-1] and a[i] and it goes for n-1 passes **/
     public static int[] bubbleSort(int[] arr, int n){
         for(int j=1; j<n; j++) {
@@ -52,6 +54,8 @@ public class SortingAlgos {
         }
         return arr;
     }
+
+
 
     /**
      * Video ref: https://www.youtube.com/watch?v=TzeBrDU-JaY&list=PL2_aWCzGMAwKedT2KfDMB9YA5DgASZb3U&index=5
@@ -104,6 +108,12 @@ public class SortingAlgos {
     }
 
 
+    /**
+     * https://www.youtube.com/watch?v=COk73cpQbFQ&list=PL2_aWCzGMAwKedT2KfDMB9YA5DgASZb3U&index=7
+     * @param arr
+     * @param start
+     * @param end
+     */
     public static void quickSort(int[] arr, int start, int end){
        if(start < end){
            int pIndex = partition(arr, start, end);
@@ -128,39 +138,168 @@ public class SortingAlgos {
         return pIndex;
     }
 
-    /** https://www.youtube.com/watch?v=8KGqMZ6BHFY **/
-    public static void radixSort(int[] arr) {
-        final int RADIX = 10;
-        ArrayList<Integer> bucketsArr[] = new ArrayList[RADIX];
-        for (int i = 0; i < bucketsArr.length; i++) {
-            bucketsArr[i] = new ArrayList<>();
+
+
+    /** https://www.youtube.com/watch?v=JMlYkE8hGJM **/
+    public static int[] bucketSort(int[] arr){
+        int RADIX = 10;
+        int passes = getDigitsOfMaxNum(arr);
+        ArrayList<Integer> buckets[] = new ArrayList[RADIX];
+        for(int i=0; i<buckets.length; i++){
+            buckets[i] = new ArrayList<>();
         }
-        boolean maxDigitLengthReached = false;
-        int temp = -1, placeValue = 1;
-        while (!maxDigitLengthReached) {
-            maxDigitLengthReached = true;
-            for (Integer item : arr) {
-                temp = item / placeValue;
-                bucketsArr[temp % RADIX].add(item);
-                if (maxDigitLengthReached && temp > 0) {
-                    maxDigitLengthReached = false;
-                }
+        int placeholder = 1;
+        for(int i=0; i<passes; i++){
+            for(int j=0; j<arr.length; j++){
+                int bucketIndex = (arr[j]/placeholder) % 10;
+                buckets[bucketIndex].add(arr[j]);
             }
-            int a = 0;
-            for (int b = 0; b < RADIX; b++) {
-                for (Integer i : bucketsArr[b]) {
-                    arr[a++] = i;
+            int a=0;
+            for(int k=0; k<10; k++){
+                for(int m=0; m < buckets[k].size(); m++){
+                   arr[a++] = buckets[k].get(m);
                 }
-                bucketsArr[b].clear();
+                buckets[k].clear();
             }
-            placeValue = placeValue * RADIX;
+            placeholder = placeholder * 10;
         }
-        Arrays.stream(arr).forEach(System.out::println);
+        return arr;
+    }
+    private static int getDigitsOfMaxNum(int[] arr){
+        int max = arr[0];
+        for(int i=1; i<arr.length; i++){
+            if(max < arr[i]){
+                max = arr[i];
+            }
+        }
+        return String.valueOf(arr).length();
     }
 
+
+    /** Identification --- if k is given and asked for smallest/largest
+     * k+smallest ---> maxHeap
+     * k+largest ----> minHeap
+     * Heap
+     * last leaf node = n/2
+     * leaf nodes range = Math.floor(n/2) + 1 ..... n
+     * height of heap = log n
+     * parent is at i
+     * left child is at 2i
+     * right child is at 2i + 1
+     * Video Ref : https://www.youtube.com/watch?v=UVW0NfG_YWA
+     */
+    public static int[] buildMaxHeap(int[] arr){
+        int size = arr.length;
+        for(int i=size/2; i>0; i--){
+            maxheapify(arr, size, i);
+        }
+        return arr;
+    }
+    private static void maxheapify(int[] arr, int size, int i){
+        int largest = i;
+        int left = 2*i;
+        int right = 2*i + 1;
+        if(left<=size && arr[left-1] > arr[largest-1]){
+            largest = left;
+        }
+        if(right<=size && arr[right-1] > arr[largest-1]){
+            largest = right;
+        }
+        if(largest != i){
+            int temp = arr[i-1];
+            arr[i-1] = arr[largest-1];
+            arr[largest-1] = temp;
+            maxheapify(arr, size, largest);
+        }
+    }
+    public static int[] heapSortMax(int[] arr){
+        int size = arr.length;
+        buildMaxHeap(arr);
+        for(int i=size-1; i>0; i--){
+            int temp = arr[i];
+            arr[i] = arr[0];
+            arr[0] = temp;
+            maxheapify(arr,i, 1);
+        }
+        return arr;
+    }
+
+
+    public static int[] buildMinHeap(int[] arr){
+        int n = arr.length;
+        for(int i= n/2; i>0; i--){
+            minHeapify(arr, n, i);
+        }
+        return arr;
+    }
+
+    private static void minHeapify(int[] arr, int n, int i){
+        int smallest = i;
+        int left = 2*i;
+        int right = 2*i + 1;
+        if(left <= n && arr[left-1] < arr[smallest-1]){
+            smallest = left;
+        }
+        if(right<=n && arr[right-1] < arr[smallest-1]){
+            smallest = right;
+        }
+        if(smallest != i){
+            int temp = arr[i-1];
+            arr[i-1] = arr[smallest-1];
+            arr[smallest-1] = temp;
+            minHeapify(arr, n, smallest);
+        }
+    }
+    private static int[] heapSortMin(int[] arr){
+        buildMinHeap(arr);
+        int k = arr.length;
+        for(int i=k-1; i>0; i--){
+            int temp = arr[i];
+            arr[i] = arr[0];
+            arr[0]  = temp;
+            minHeapify(arr, k, 1);
+        }
+        return arr;
+    }
+
+
+    public static int getNthSmallestElement(int[] arr, int k){
+        buildMinHeap(arr);
+        int heap_size = arr.length;
+        for(int i=0; i<k-1; i++){
+            if(heap_size == 0){
+                return Integer.MAX_VALUE;
+            }
+            if(heap_size > 1){
+                arr[0] = arr[heap_size - 1];
+                minHeapify(arr, heap_size, 1);
+            }
+            heap_size--;
+        }
+        return arr[0];
+    }
+
+    public static int getNthLargestElement(int[] arr, int k){
+        buildMaxHeap(arr);
+        int heap_size = arr.length;
+        for(int i=0; i<k-1; i++){
+            if(heap_size == 0){
+                return Integer.MIN_VALUE;
+            }
+            if(heap_size > 1){
+                arr[0] = arr[heap_size-1];
+                maxheapify(arr, heap_size, 1);
+            }
+            heap_size--;
+        }
+        return arr[0];
+    }
+
+
+
     public static void main(String[] args) {
-        int arr[] = {2,5,3,1,7,6};
-        radixSort(arr);
+        int arr[] = {10, 30, 50, 20, 35, 15, 45, 55, 90, 52};
+        System.out.println(getNthLargestElement(arr,6));
     }
 }
 

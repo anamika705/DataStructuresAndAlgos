@@ -1,0 +1,9 @@
+
+;
+java:S1659"%Declare "inorder" on a separate line.(¶é–”
+V	java:S125"<This block of commented-out lines of code should be removed.(†ËÒ–þÿÿÿÿ
+S	java:S106"9Replace this use of System.out or System.err by a logger.(òóÉ¢úÿÿÿÿ
+?
+java:S1481")Remove this unused "nums" local variable.(¶é–”
+B
+java:S1481",Remove this unused "inorder" local variable.(¶é–”
