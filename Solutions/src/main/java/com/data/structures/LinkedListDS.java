@@ -201,4 +201,18 @@ public class LinkedListDS {
         return head;
     }
 
+/**
+ * https://www.youtube.com/watch?v=u4FWXfgS8jw
+ * Given the heads of two singly linked-lists headA and headB, return the node at which the two lists intersect. If the two linked lists have no intersection at all, return null.
+ */
+public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    ListNode listA = headA;
+    ListNode listB = headB;
+    while(listA != listB){
+        listA = listA == null ? headB : listA.next;
+        listB = listB == null ? headA : listB.next;
+    }
+    return listA;
+}
+
 }

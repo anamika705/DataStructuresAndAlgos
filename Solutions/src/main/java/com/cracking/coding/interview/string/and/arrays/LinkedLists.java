@@ -1,7 +1,7 @@
 package com.cracking.coding.interview.string.and.arrays;
 
 
-import com.data.structures.model.ListNode;
+import com.data.structures.ListNode;
 
 import java.util.HashSet;
 
@@ -61,21 +61,18 @@ public class LinkedLists {
            return node;
         }
 
-        public static int getKthToTheLast(Node node, int k){
-            if(node == null){
-                return 0;
+        public static int getKthToTheLast(Node head, int k){
+            Node dummy = new Node(0);
+            dummy.next = head;
+            Node slow = dummy;
+            Node fast = dummy;
+            while(fast.next != null ){
+                fast = fast.next;
+                if(k-- >= 0){
+                    slow = slow.next;
+                }
             }
-            Node curr = node;
-            while(k > 0){
-                curr = curr.next;
-                k--;
-            }
-            Node sec = node;
-            while(curr != null){
-                curr = curr.next;
-                sec = sec.next;
-            }
-            return sec.data;
+            return slow.data;
         }
 
         public static Node deleteMiddleElement(Node node){
